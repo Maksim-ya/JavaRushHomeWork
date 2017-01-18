@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Solution.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Solution.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.javarush.test.level25.lesson05.task02; 
+ 
+</span><span class="s2">/* Без дураков 
+1. Создай private class MyUncaughtExceptionHandler, который на перехват исключения должен подождать половину секунды, 
+а затем вывести на экран secretKey, имя трэда и сообщение возникшего исключения. 
+Используй String.format(...). Пример: 
+super secret key, Thread-0, it's an example 
+2. Разберитесь в последовательности выполняемого кода и обеспечьте логирование возникновения исключения в п.1. 
+3. Метод main в тестировании не участвует. 
+*/</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">Solution { 
+ 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        MyThread myThread = </span><span class="s0">new </span><span class="s1">Solution().</span><span class="s0">new </span><span class="s1">MyThread(</span><span class="s3">&quot;super secret key&quot;</span><span class="s1">); 
+        myThread.start(); 
+    } 
+ 
+    </span><span class="s0">public class </span><span class="s1">MyThread </span><span class="s0">extends </span><span class="s1">Thread 
+    { 
+        </span><span class="s0">private </span><span class="s1">String secretKey; 
+ 
+        </span><span class="s0">public </span><span class="s1">MyThread(String secretKey) 
+        { 
+            </span><span class="s0">this</span><span class="s1">.secretKey = secretKey; 
+            setUncaughtExceptionHandler(</span><span class="s0">new </span><span class="s1">MyUncaughtExceptionHandler()); 
+ 
+        } 
+ 
+        @Override 
+        </span><span class="s0">public void </span><span class="s1">run() 
+        { 
+            </span><span class="s0">throw new </span><span class="s1">NullPointerException(</span><span class="s3">&quot;it's an example&quot;</span><span class="s1">); 
+        } 
+        </span><span class="s0">private class </span><span class="s1">MyUncaughtExceptionHandler </span><span class="s0">implements </span><span class="s1">Thread.UncaughtExceptionHandler 
+        { 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">uncaughtException(Thread t, Throwable e) 
+            { 
+                </span><span class="s0">try</span><span class="s1"> 
+                { 
+ 
+                    sleep(</span><span class="s4">500</span><span class="s1">); 
+                    System.out.println(String.format(</span><span class="s3">&quot;%s, %s, %s&quot;</span><span class="s1">, secretKey, t.getName(), e.getMessage())); 
+                } 
+                </span><span class="s0">catch </span><span class="s1">(InterruptedException e1) 
+                { 
+                    e1.printStackTrace(); 
+                } 
+            } 
+        } 
+    } 
+ 
+ 
+ 
+} 
+ 
+</span></pre>
+</body>
+</html>
